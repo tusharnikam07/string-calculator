@@ -5,7 +5,13 @@ public class StringCalculator {
 			return 0;
 		}
 		int sum = 0;
-		String[] tokens = numbers.split(",");
+		String delimeter = ",|\\n";
+		if (numbers.contains(",\n") || numbers.contains("\n,")) {
+			throw new IllegalArgumentException(
+					"Invalid input format: mixed commas and newlines without proper separation");
+		}
+
+		String[] tokens = numbers.split(delimeter);
 		for (String token : tokens) {
 			if (!token.isEmpty()) {
 				int num = Integer.parseInt(token);
@@ -20,8 +26,8 @@ public class StringCalculator {
 		System.out.println(calculator.Add(""));
 		System.out.println(calculator.Add("1"));
 		System.out.println(calculator.Add("1,2"));
-		System.out.println(calculator.Add("1,2,3,4,5,6"));
-		System.out.println(calculator.Add("1,2,3,4,5,6,7,8,9,10,11,12,13"));
+		System.out.println(calculator.Add("1\n2,3"));
+		System.out.println(calculator.Add("1,\n2"));
 
 	}
 
