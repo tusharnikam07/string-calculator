@@ -28,7 +28,7 @@ public class StringCalculator {
 				int num = Integer.parseInt(token);
 				if (num < 0) {
 					negatives.add(num);
-				} else {
+				} else if (num <= 1000) {
 					sum += num;
 				}
 
@@ -48,7 +48,8 @@ public class StringCalculator {
 		System.out.println(calculator.Add("1\n2,3"));
 //		System.out.println(calculator.Add("1,\n2"));
 		System.out.println(calculator.Add("//;\n1;2"));
-		System.out.println(calculator.Add("//;\n-11;-2;-3"));
+//		System.out.println(calculator.Add("//;\n-11;-2;-3"));
+		System.out.println(calculator.Add("//;\n1001;2;3"));
 
 	}
 
