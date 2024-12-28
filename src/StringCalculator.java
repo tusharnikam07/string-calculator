@@ -1,3 +1,6 @@
+import java.util.ArrayList;
+import java.util.List;
+
 public class StringCalculator {
 
 	public int Add(String numbers) {
@@ -19,11 +22,20 @@ public class StringCalculator {
 		}
 
 		String[] tokens = numbers.split(delimeter);
+		List<Integer> negatives = new ArrayList<>();
 		for (String token : tokens) {
 			if (!token.isEmpty()) {
 				int num = Integer.parseInt(token);
-				sum += num;
+				if (num < 0) {
+					negatives.add(num);
+				} else {
+					sum += num;
+				}
+
 			}
+		}
+		if (!negatives.isEmpty()) {
+			throw new IllegalArgumentException("Negatives not allowed: " + negatives);
 		}
 		return sum;
 	}
@@ -36,6 +48,7 @@ public class StringCalculator {
 		System.out.println(calculator.Add("1\n2,3"));
 //		System.out.println(calculator.Add("1,\n2"));
 		System.out.println(calculator.Add("//;\n1;2"));
+		System.out.println(calculator.Add("//;\n-11;-2;-3"));
 
 	}
 
