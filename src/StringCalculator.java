@@ -15,7 +15,9 @@ public class StringCalculator {
 			String customDelimiter = numbers.substring(2, delimiterEnd);
 
 			if (customDelimiter.startsWith("[") && customDelimiter.endsWith("]")) {
-				delimiter = customDelimiter.substring(1, customDelimiter.length() - 1);
+				customDelimiter = customDelimiter.substring(1, customDelimiter.length() - 1);
+				String[] delimiters = customDelimiter.split("\\]\\[");
+				delimiter = String.join("|", delimiters);
 			} else {
 				delimiter = customDelimiter;
 			}
@@ -38,7 +40,6 @@ public class StringCalculator {
 				} else if (num <= 1000) {
 					sum += num;
 				}
-
 			}
 		}
 		if (!negatives.isEmpty()) {
@@ -58,6 +59,8 @@ public class StringCalculator {
 //		System.out.println(calculator.Add("//;\n-11;-2;-3"));
 		System.out.println(calculator.Add("//;\n1001;2;3"));
 		System.out.println(calculator.Add("//[@@@]\n1@@@2@@@3"));
+		System.out.println(calculator.Add("//[@][%]\n1@2%3"));
+		System.out.println(calculator.Add("//[@@@][%%%]\n1@@@2%%%3@@@2%%%3"));
 
 	}
 
