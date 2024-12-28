@@ -3,13 +3,15 @@ import java.util.List;
 
 public class StringCalculator {
 
-	public int Add(String numbers) {
+	public int add(String numbers) {
 		if (numbers == null || numbers.isEmpty()) {
 			return 0;
 		}
+
 		int sum = 0;
 		String delimiter = ",|\\n";
 
+		// Handle custom delimiter
 		if (numbers.startsWith("//")) {
 			int delimiterEnd = numbers.indexOf("\n");
 			String customDelimiter = numbers.substring(2, delimiterEnd);
@@ -25,16 +27,20 @@ public class StringCalculator {
 			numbers = numbers.substring(delimiterEnd + 1);
 		}
 
+		// Validate input for invalid format
 		if (numbers.contains(",\n") || numbers.contains("\n,")) {
 			throw new IllegalArgumentException(
 					"Invalid input format: mixed commas and newlines without proper separation");
 		}
 
+		// Split numbers and calculate sum
 		String[] tokens = numbers.split(delimiter);
 		List<Integer> negatives = new ArrayList<>();
+
 		for (String token : tokens) {
 			if (!token.isEmpty()) {
 				int num = Integer.parseInt(token);
+
 				if (num < 0) {
 					negatives.add(num);
 				} else if (num <= 1000) {
@@ -42,25 +48,28 @@ public class StringCalculator {
 				}
 			}
 		}
+
+		// Handle negatives
 		if (!negatives.isEmpty()) {
 			throw new IllegalArgumentException("Negatives not allowed: " + negatives);
 		}
+
 		return sum;
 	}
 
 	public static void main(String[] args) {
 		StringCalculator calculator = new StringCalculator();
-		System.out.println(calculator.Add(""));
-		System.out.println(calculator.Add("1"));
-		System.out.println(calculator.Add("1,2"));
-		System.out.println(calculator.Add("1\n2,3"));
-//		System.out.println(calculator.Add("1,\n2"));
-		System.out.println(calculator.Add("//;\n1;2"));
-//		System.out.println(calculator.Add("//;\n-11;-2;-3"));
-		System.out.println(calculator.Add("//;\n1001;2;3"));
-		System.out.println(calculator.Add("//[@@@]\n1@@@2@@@3"));
-		System.out.println(calculator.Add("//[@][%]\n1@2%3"));
-		System.out.println(calculator.Add("//[@@@][%%%]\n1@@@2%%%3@@@2%%%3"));
+		System.out.println(calculator.add(""));
+		System.out.println(calculator.add("1"));
+		System.out.println(calculator.add("1,2"));
+		System.out.println(calculator.add("1\n2,3"));
+//		System.out.println(calculator.add("1,\n2"));
+		System.out.println(calculator.add("//;\n1;2"));
+//		System.out.println(calculator.add("//;\n-11;-2;-3"));
+		System.out.println(calculator.add("//;\n1001;2;3"));
+		System.out.println(calculator.add("//[@@@]\n1@@@2@@@3"));
+		System.out.println(calculator.add("//[@][%]\n1@2%3"));
+		System.out.println(calculator.add("//[@@@][%%%]\n1@@@2%%%3@@@2%%%3"));
 
 	}
 
