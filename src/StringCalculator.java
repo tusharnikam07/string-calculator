@@ -8,11 +8,18 @@ public class StringCalculator {
 			return 0;
 		}
 		int sum = 0;
-		String delimeter = ",|\\n";
+		String delimiter = ",|\\n";
 
 		if (numbers.startsWith("//")) {
 			int delimiterEnd = numbers.indexOf("\n");
-			delimeter = numbers.substring(2, delimiterEnd);
+			String customDelimiter = numbers.substring(2, delimiterEnd);
+
+			if (customDelimiter.startsWith("[") && customDelimiter.endsWith("]")) {
+				delimiter = customDelimiter.substring(1, customDelimiter.length() - 1);
+			} else {
+				delimiter = customDelimiter;
+			}
+
 			numbers = numbers.substring(delimiterEnd + 1);
 		}
 
@@ -21,7 +28,7 @@ public class StringCalculator {
 					"Invalid input format: mixed commas and newlines without proper separation");
 		}
 
-		String[] tokens = numbers.split(delimeter);
+		String[] tokens = numbers.split(delimiter);
 		List<Integer> negatives = new ArrayList<>();
 		for (String token : tokens) {
 			if (!token.isEmpty()) {
@@ -50,6 +57,7 @@ public class StringCalculator {
 		System.out.println(calculator.Add("//;\n1;2"));
 //		System.out.println(calculator.Add("//;\n-11;-2;-3"));
 		System.out.println(calculator.Add("//;\n1001;2;3"));
+		System.out.println(calculator.Add("//[@@@]\n1@@@2@@@3"));
 
 	}
 
